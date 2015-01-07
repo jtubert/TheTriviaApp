@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D1212491A5DD68B00006549 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1212481A5DD68B00006549 /* CategoryViewController.swift */; };
 		1D76349D1A5756C2009CAF98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D76349C1A5756C2009CAF98 /* AppDelegate.swift */; };
 		1D76349F1A5756C2009CAF98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D76349E1A5756C2009CAF98 /* ViewController.swift */; };
 		1D7634A21A5756C2009CAF98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D7634A01A5756C2009CAF98 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D1212481A5DD68B00006549 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		1D7634971A5756C2009CAF98 /* TheTriviaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheTriviaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D76349B1A5756C2009CAF98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D76349C1A5756C2009CAF98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				1D76349C1A5756C2009CAF98 /* AppDelegate.swift */,
 				1D76349E1A5756C2009CAF98 /* ViewController.swift */,
+				1D1212481A5DD68B00006549 /* CategoryViewController.swift */,
 				1D7634A01A5756C2009CAF98 /* Main.storyboard */,
 				1D7634A31A5756C2009CAF98 /* Images.xcassets */,
 				1D7634A51A5756C2009CAF98 /* LaunchScreen.xib */,
@@ -295,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D76349F1A5756C2009CAF98 /* ViewController.swift in Sources */,
+				1D1212491A5DD68B00006549 /* CategoryViewController.swift in Sources */,
 				1D76349D1A5756C2009CAF98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

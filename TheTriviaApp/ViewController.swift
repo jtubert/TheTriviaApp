@@ -34,15 +34,45 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        initialize()
-        
+        initialize()   
         
     }
     
-    @IBAction func refresh(sender: UIButton) {
+    @IBAction func answerSelected(sender: UIButton) {
+        if(sender == self.twitterButton1){
+            if(self.randomUsersArr[0] == self.tweetsUserArr[self.currentTweetNum]){
+                self.refresh()
+            }else{
+                self.lost()
+            }
+        }else if(sender == self.twitterButton2){
+            if(self.randomUsersArr[1] == self.tweetsUserArr[self.currentTweetNum]){
+                self.refresh()
+            }else{
+                self.lost()
+            }
+        }else if(sender == self.twitterButton3){
+            if(self.randomUsersArr[2] == self.tweetsUserArr[self.currentTweetNum]){
+                self.refresh()
+            }else{
+                self.lost()
+            }
+        }
+        
+    }
+    
+    func refresh() {
         self.currentTweetNum++
         self.tweetLabel.text = self.tweetsArr[self.currentTweetNum]
         self.addRandomChoices()
+    }
+    
+    func lost(){
+        let alert = UIAlertView()
+        alert.title = "Sorry"
+        alert.message = "Wrong answer!"
+        alert.addButtonWithTitle("OK")
+        alert.show()
     }
     
     func initialize(){
@@ -51,8 +81,6 @@ class ViewController: UIViewController {
         self.twitterButton2.hidden = true
         self.twitterButton3.hidden = true
         
-        
-        //getCategories()
         getQuestions()
         getTweeters()
         
@@ -96,38 +124,7 @@ class ViewController: UIViewController {
     }
     
     
-    func getCategories(){
-        var dic = Dictionary<String, String>()
         
-        PFCloud.callFunctionInBackground("listsList", withParameters: dic) { (result: AnyObject!, error: NSError!) -> Void in
-            if(error == nil){
-                
-                //let data:NSData = (result as NSData)
-                //var error: NSError?
-                //var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error)
-                
-                //var data = result as NSDictionary
-                
-                
-                
-                //let jsonDict = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error) as NSDictionary
-                
-                
-                //{"result":{"id":187272793,"name":"News"}}
-                
-                
-                println(result[0]?["name"])
-                
-                
-                                
-            }else{
-                println(error)
-            }
-            
-        }
-
-    }
-    
     func getQuestions(){
         var dic = Dictionary<String, String>()
         
