@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+    <!-- Grab Google CDN jQuery. fall back to local if necessary -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+	<script>!window.jQuery && document.write('<script src="js/jquery-1.4.4.min.js"><\/script>')</script>
+    <script src="twitter-text.js"></script>
+	<script type="text/javascript" src="script/jquery.mousewheel.js"></script> 
+	<script type="text/javascript" src="script/jquery.jscrollpane.min.js"></script>
+    <!--
+    http://www.barelyfitz.com/screencast/html-training/css/positioning/
+    -->
+	<link type="text/css" href="style/demo.css" rel="stylesheet" media="all" /> 
+	<!-- styles needed by jScrollPane - include in your own sites --> 
+	<link type="text/css" href="style/demo.css" rel="stylesheet" media="all" />
+	<link type="text/css" href="style/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+	
+	<link type="text/css" href="style/jquery.jscrollpane.lozenge.css" rel="stylesheet" media="all" />
+    <style type="text/css" id="page-css"> 
+		/* Styles specific to this particular page */
+		.scroll-pane,
+		.scroll-pane-arrows
+		{
+			width: 100%;
+			height: 200px;
+			overflow: auto;
+		}
+		.horizontal-only
+		{
+			height: auto;
+			max-height: 200px;
+		}
+	</style>
+
+    <style type="text/css">
+		#tweets{
+			height:300px;
+			overflow-x:hidden;
+			overflow-y:scroll;
+			width:355px;
+		}
+		
+        .twit{
+            background-color: lightBlue;
+            border-bottom-width: 1px;
+			border-bottom-color:white;
+            margin: 0px;
+            border-bottom-style: solid;
+            width:340px;
+            position:relative;
+        }
+        .twit img{
+           margin: 6px; 
+        }
+        
+        .twit header{
+           margin: 6px;
+            position: absolute;
+            top: 0px;
+            left: 61px;
+            
+        }
+        
+        .twit detail{
+           margin: 6px;
+            position: absolute;
+            top: 18px;
+            left: 61px;
+        }
+        
+    </style>
+
+	
+	
+</head>
+<body>
+	<script>
+	//http://dev.twitter.com/doc/get/statuses/user_timeline
+    //var url = 'http://api.twitter.com/1/statuses/user_timeline/jtubert.json?count=200&include_rts=true&callback=?';
+	//http://dev.twitter.com/doc/get/lists/statuses
+	
+	//http://api.twitter.com/1/followers/ids.json?screen_name=jtubert
+	//http://api.twitter.com/1/friends/ids.json?screen_name=jtubert
+	//http://api.twitter.com/1/users/show.json?user_id=124535997
+	
+	//http://api.twitter.com/1/users/profile_image/124535997.xml
+	
+	
+	
+	//https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=jtubert&count=2
+	
+	
+	//var url = 'http://api.twitter.com/1/lists/statuses.json?count=100&include_rts=true&slug=rga-ba&owner_screen_name=jtubert&callback=?';
+	var url = 'http://admin:IbHahagBud1@group5-lamp.web.rga.com/SocialModerator/server/feed?campaignId=6';
+    //$.getJSON(url,{}, onData);
+
+    $.get(
+		  "http://jsonp.guffa.com/Proxy.ashx?url="+url,
+		  function(data) {
+		    onData(data);
+		  },
+		  "jsonp"
+		);
+  
+    function onData(tweetsArray) {
+        var followers_count = tweetsArray[0].user.followers_count;
+        var friends_count = tweetsArray[0].user.friends_count;
+        //var name = tweetsArray[0].user.name;
+        //var profile_image_url = tweetsArray[0].user.profile_image_url;
+        var screen_name = tweetsArray[0].user.screen_name;
+        var statuses_count = tweetsArray[0].user.statuses_count;
+        
+        
+        for(var i=0;i<tweetsArray.length;i++){
+            var name = tweetsArray[i].user.name;
+			var profile_image_url = tweetsArray[i].user.profile_image_url;
+
+			var created_at = new Date(tweetsArray[i].created_at);
+            var month = created_at.getMonth() + 1;
+            var day = created_at.getDate();
+            var year = created_at.getFullYear();
+            var dateCreated = month + "/" + day + "/" + year;
+            
+            var id = tweetsArray[i].id;
+            var in_reply_to_screen_name = tweetsArray[i].in_reply_to_screen_name;
+            var in_reply_to_status_id = tweetsArray[i].in_reply_to_status_id;
+            var in_reply_to_status_id_str = tweetsArray[i].in_reply_to_status_id_str;
+            var in_reply_to_user_id = tweetsArray[i].in_reply_to_user_id;
+            var in_reply_to_user_id_str = tweetsArray[i].in_reply_to_user_id_str;
+            var source = tweetsArray[i].source;
+            var text = tweetsArray[i].text;
+            
+            var div = "<div class='twit' id='"+id+"'>";
+			div+="<img src='"+profile_image_url+"'></img>";
+			//div+="<header><b>"+i+") "+source+" ("+dateCreated+")</b></header>";
+			div+="<header><b>"+name+" ("+dateCreated+")</b></header>";
+			div+="<detail>"+text+"</detail>";
+			div+="</div>";
+			
+            $("#tweets").append(twttr.txt.autoLink(div));
+            
+			var headerH = $("#"+id).find("header").css("height").replace("px","");
+			var detailH = $("#"+id).find("detail").css("height").replace("px","");
+			var img = $("#"+id).find("img");//.css("height").replace("px","");
+			var h = Number(detailH)+Number(headerH)+10;
+			var maxH = Math.max(h,60);
+			
+			$("#"+id).css("height", maxH+"px");
+            
+			
+            
+        }
+
+		$('.scroll-pane').jScrollPane();
+			$('.scroll-pane-arrows').jScrollPane(
+				{
+					showArrows: true,
+					horizontalGutter: 10
+				}
+			);
+   
+    
+    };
+  
+    
+    </script>
+
+
+<div id="tweets" class="scroll-pane-arrows"></div>
+
+</body>
+</html>

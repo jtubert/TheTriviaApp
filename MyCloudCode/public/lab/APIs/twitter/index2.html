@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Anywhere Sample</title>
+    <script src="http://platform.twitter.com/anywhere.js?id=CJZy5WCs20awJpD2PTOF6A&v=1" type="text/javascript"></script>
+  </head>
+  <body>
+
+  	<!--span id="login"></span>
+	<script type="text/javascript">
+
+	  twttr.anywhere(function (T) {
+	    T("#login").connectButton({
+	      authComplete: function(user) {
+	        alert(user);
+	      },
+	      signOut: function() {
+	        // triggered when user logs out
+	      }
+	    });
+	  });
+
+	</script-->
+	
+	<div id="tbox"></div>
+	<script type="text/javascript">
+	//for a list of all params  	
+	//http://dev.twitter.com/pages/anywhere_tweetbox
+	// custom css
+	//http://winkpress.com/tweet-box-lets-your-visitors-write-and-send-tweets-in-your-site/
+	
+		twttr.anywhere(function (T) {
+
+	    T("#tbox").tweetBox({
+	      height: 100,
+	      width: 400,
+		  label: '<link rel="stylesheet" type="text/css" media="all" href="http://winkpress.com/wp-content/themes/winkpress/tweet-box.css" />Got tips, suggestions or questions?',
+	      defaultContent: "Tweet this!"
+	    });
+
+	  });
+
+	</script>
+	
+  </body>
+</html>
+
+
+

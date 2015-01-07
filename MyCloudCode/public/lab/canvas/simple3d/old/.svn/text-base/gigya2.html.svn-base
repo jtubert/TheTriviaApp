@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+
+	<!--script type="text/javascript" src="http://cdn.gigya.com/js/socialize.js?apiKey=2_dN0eh-Tkc4rF19iqsHI06pQus0hYGIqX1Aa5af5j4hI5pv7CFLrIi2LUEa3cqiU0"></script-->
+	
+	<script type="text/javascript" src="http://cdn.gigya.com/js/socialize.js?apiKey=2_Gv88X3iBr1nbPVMh2LPXmy0h1vQU2PduRFqkBy6DAg_rpu0I0S1TizqaZgZlwJzi"></script>
+	
+	
+	
+	
+	<script src="../js/jquery-1.4.4-min.js"></script>
+	<script src="../js/3d.js"></script>
+	
+	
+	<link rel="stylesheet" href="../css/style.css" media="screen" />
+	
+	<script type="text/javascript">
+	var conf={APIKey: '2_Gv88X3iBr1nbPVMh2LPXmy0h1vQU2PduRFqkBy6DAg_rpu0I0S1TizqaZgZlwJzi',enabledProviders: 'facebook,twitter,linkedin,myspace,yahoo,google,microsoft,orkut,openid',connectWithoutLoginBehavior: 'alwaysLogin'}
+	</script>
+	
+	
+	
+	
+</head>
+<body>
+	
+	<script type="text/javascript">
+	
+	var userPhotoURL;
+	var currentNetwork;
+	
+	function getAlbums(){
+		gigya.services.socialize.getAlbums(conf,{callback:getAlbumsCallback});  
+	}
+	
+	function getAlbumsCallback(response){
+		 if (  response.errorCode == 0 ) {               
+		         var myAlbums = response['albums'].asArray();            
+		         if ( null!=myAlbums && myAlbums.length>0) {          
+		             getPhotos(myAlbums[1]['albumID']);  
+		         }  
+		         else {  
+		             //alert('No albums were returned');  
+					$("#console").html('No albums were returned');
+		         }  
+		     }  
+		     else { 
+			 	$("#console").html('Error :' + response.errorMessage);
+		         //alert('Error :' + response.errorMessage);  
+		     }
+	}
+	
+	function getPhotos(albumID) {  
+	    gigya.services.socialize.getPhotos(conf, { callback:getPhotos_callback, albumIDs:albumID });  
+	}
+	
+	function getFriendsInfo(){
+		var context = {  
+		         myFriendsTitle : 'My friends are:'  
+		};
+		
+		var params = {   
+		     context:context,   
+		     callback:getFriendsInfoCallback  
+		};
+		
+		
+		gigya.services.socialize.getFriendsInfo(conf,params); 
+	}
+	
+	
+	
+	function getFriendsInfoCallback(response) {    
+	     if ( response.errorCode == 0 ) {               
+	         var myFriends = response['friends'].asArray();            
+	         if ( null!=myFriends && myFriends.length>0) {          
+	             var msg = response['context']['myFriendsTitle'] + '\n\n';          
+	             for (var index in myFriends) {  
+	                if(index < 5){ 
+						var currFriend = myFriends[index];  
+	                 	msg += '('+currFriend['nickname']+') - '+ currFriend['photoURL']+ ':\n' ;  
+					}                 
+	             }
+	             $("#console").html(response.toSource());
+	             //console.log(response.toSource());  
+	         }  
+	         else {  
+				$("#console").html('No friends were returned');
+	             //alert('No friends were returned');  
+	         }  
+	     }  
+	     else {  
+	         $("#console").html('Error :' + response.errorMessage);  
+	     }  
+	 }
+	
+	function getPhotos_callback(response) {  
+	    if (response.status == 'OK') {  
+	        var myPhotos = response.photos.asArray();  
+	        var html = "<table cellpadding=20><tr>";  
+	        for (var i = 0; i < Math.min(3, myPhotos.length); i++) {  
+	            html += "<td align=center valign='bottom'>";  
+	            if (myPhotos[i].photoURL)  
+	                html += "<img width='" + myPhotos[i].photoWidth + "' height='" +  
+	                    myPhotos[i].photoHeight + "' src='" + myPhotos[i].photoURL + "' ></td>";  
+	        }  
+	        html += "</tr></table>";  
+	        document.getElementById('photos').innerHTML += html;  
+	    }  
+	}
+	
+	function publishUserAction(){
+		 var act = new gigya.services.socialize.UserAction();  
+		   
+		 act.setUserMessage("This is the user message");   // Setting the User Message  
+		 act.setTitle("This is my title");  // Setting the Title  
+		 act.setLinkBack("http://www.gigya.com/site/content/socialize.aspx");  // Setting the Link Back  
+		 act.setDescription("This is my Description");   // Setting Description  
+		 act.addActionLink("Read More", "http://www.gigya.com/site/content/socialize.aspx");  // Adding Action Link  
+		 // Adding a Media (image)  
+		 act.addMediaItem( { type: 'image', src: 'http://gigya.com/site/images/bsAPI/gs_logo.jpg', href: 'http://www.gigya.com/site/content/socialize.aspx' });  
+		               
+		            
+		 gigya.services.socialize.publishUserAction(conf, {userAction:act});
+	}
+	
+	
+	
+	
+	
+	
+	function setStatus(s){
+		gigya.services.socialize.setStatus(conf,{status:s,callback:setStatus_callback}); 
+	}
+	
+	
+	
+	
+	
+	 function setStatus_callback(response)  
+	         {  
+	             switch (response.errorCode )  
+	             {  
+	                 case 0:  
+	                     $("#console").html("Status Updated.");  
+	                     break;  
+	                 default:
+						 $("#console").html("Unable to update status. response=" +response.errorCode + "; " + response.errorMessage);  
+	                    
+	             }  
+	         }
+	
+	function removeConnection(){
+		gigya.services.socialize.removeConnection(conf,{callback:printResponse2});  
+	}
+	
+	function getAvailableProviders(){
+		var context = {  
+		    message:'This is my message to you',   
+		    myAppTitle:'These are my providers:'  
+		};
+		
+		
+		var params = {  
+		    requiredCapabilities: 'friends',   
+		    callback:printResponse,  
+		    context:context   
+		};  
+
+		gigya.services.socialize.getAvailableProviders(conf,params);
+	}
+	
+	function addConnection(p)
+    {
+        
+        var params = {
+           callback: onConnectionAdded,
+		   facebookExtraPermissions: "publish_stream",
+           provider: p
+
+        };    
+        
+        gigya.services.socialize.addConnection(conf, params);	
+		
+    }
+	
+    function onConnectionAdded(response)
+    {
+        console.log(response.requestParams.provider);
+
+		if (response.errorCode == 0)
+        {            
+            jQuery('#UserInfo').append("<h2>"+response.user.identities[response.requestParams.provider].nickname+"</h2>");
+			jQuery('#UserInfo').append("<img src='"+response.user.identities[response.requestParams.provider].photoURL+"'/>");          
+            
+        }
+        else
+        {
+            //handle errors
+            $("#console").html("An error has occurred!" + '\n' + 
+                "Error details: " + response.errorMessage + '\n' +
+                "In method: " + response.operation);
+        }
+    }
+	
+function printResponse(response) {    
+    if ( response.errorCode == 0 ) {               
+        var availableProviders= response['availableProviders'];   
+        var msg = response['context']['myAppTitle'] + '\n\n';  
+        if ( null!=availableProviders ) {  
+            for (var providerName in availableProviders) {  
+                msg += providerName + ':\n' ;  
+                var provider = availableProviders[providerName];  
+                for (var properties in provider) {  
+                    msg+= ' ' +properties+ '  :  ' + provider[properties] + '\n';  
+                }  
+                msg+='\n';  
+            }              
+            $("#console").html(msg);  
+        }  
+        else {  
+            $("#console").html('Error : NO available providers were returned');  
+        }  
+    }  
+    else {  
+        $("#console").html('Error :' + response.errorMessage);  
+    }  
+} 
+
+function printResponse2(response) {    
+     if ( response.errorCode == 0 ) {               
+         var user = response.user;  
+         var msg = 'User '+user.nickname + ' has been disconnected';  
+         $("#console").html(response.toSource());  
+     }  
+     else {  
+         $("#console").html('Error :' + response.errorMessage);  
+     }    
+} 
+function getSessionInfo(){
+	gigya.services.socialize.getSessionInfo(conf,{provider:currentNetwork,callback:getSessionInfoCallback});
+}
+
+function getSessionInfoCallback(response){
+	if ( response.errorCode == 0 ) {               
+		var authToken = response['authToken'];
+		$("#console").html("authToken: "+authToken);
+	}else{
+		$("#console").html('Error/getSessionInfoCallback :' + response.errorMessage);  
+	}
+}
+
+function getFriendsInfoCallback(response) {    
+     if ( response.errorCode == 0 ) {               
+         var myFriends = response['friends'].asArray();            
+         if ( null!=myFriends && myFriends.length>0) {          
+               
+             for (var index in myFriends) {  
+                if(index < 10){ 
+					var currFriend = myFriends[index];  
+					if(currFriend['photoURL']){
+						$("#friends").append("<img src='"+currFriend['photoURL']+"'/>");
+
+						$("#console").append(currFriend);
+					}
+					
+					
+					//msg += '('+currFriend['nickname']+') - '+ currFriend['photoURL']+ ':\n' ;  
+				}                 
+             }              
+             //console.log(response.toSource());
+
+			$("#canvasHolder").append("<div id='holder'></div>");
+
+  			var main = new com.jtubert.Main(true);
+			main.init("friends", userPhotoURL);
+			
+			$("#console").append($("#friends").find("img").length+ ':\n');
+			
+         }  
+         else {  
+             $("#console").html('No friends were returned');  
+         }  
+     }  
+     else {  
+         $("#console").html('Error :' + response.errorMessage);  
+     }  
+ }
+
+	function getUserInfoCallback(response){
+		if ( response.errorCode == 0 ) { 
+			userPhotoURL = response.user.photoURL;
+			if(userPhotoURL != ""){
+				$("#login").hide();
+				$("#networks").hide();
+				$("#logout").show();
+				$("#console").html('getUserInfoCallback :' + response.toSource());  
+				//gigya.services.socialize.getFriendsInfo(conf,{callback:getFriendsInfoCallback}); 
+			}else{
+				$("#login").show();
+				$("#networks").show();
+				$("#logout").hide();
+				$("#console").html('userPhotoURL :' + userPhotoURL);  	
+			}    
+		}else{
+			$("#console").html('Error :' + response.errorMessage);  
+		}
+	}
+	
+	function getUserInfo(){
+		gigya.services.socialize.getUserInfo(conf,{callback:getUserInfoCallback}); 
+			 
+	}
+	
+	function logoutCallback(response) {
+		 location.reload();
+		
+	     if ( response.errorCode == 0 ) {                   
+	         $("#console").html('User has logged out');
+	    	$("#login").show();
+			$("#networks").show();
+			$("#logout").hide();
+	     }    
+	     else {    
+	         $("#console").html('Error :' + response.errorMessage);
+			$("#login").hide();
+			$("#networks").hide();
+			$("#logout").show();    
+	     }    
+	 }   
+	   
+	function logout(){
+		gigya.services.socialize.logout(conf,{callback:logoutCallback});
+	} 
+	
+	function onLogin(response){  
+	     //getUserInfo();
+		$("#console").html("response: "+response);   
+	}	
+	
+	function login(){
+		 var params = {  
+		     provider:currentNetwork,  
+		     callback: 'onLogin',
+			 redirectURL: document.location.href
+		 }; 		   
+		 gigya.services.socialize.login(conf, params); 		 
+	}
+	
+	function getUrlVars()
+	{
+	    var vars = [], hash;
+	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	        hash = hashes[i].split('=');
+	        vars.push(hash[0]);
+	        vars[hash[0]] = hash[1];
+	    }
+	    return vars;
+	}
+	
+	function changeNetwork() {
+		currentNetwork = $("#networks").val(); 
+		$("#console").html('currentNetwork :' + currentNetwork);    
+	}
+	
+	</script>
+	<div id="componentDiv"></div>
+	<script type="text/javascript">
+		
+	
+	
+		$(document).ready (function () {
+			
+			if(getUrlVars()["debug"] == "true"){
+				$("#console").show();
+			}else{
+				$("#console").hide();
+			}
+			
+			$("#networks").change(changeNetwork);
+		    changeNetwork();
+			
+			
+			$("#login").hide();
+			$("#logout").hide();
+			$("#networks").hide();
+			
+			getUserInfo();
+			
+			/*
+			gigya.services.socialize.addEventHandlers(conf, {   
+			     onLogin:onLogin
+			    }  
+			);
+
+			gigya.services.socialize.showLoginUI(conf, {containerID: "componentDiv", width:150, height:92, showTermsLink:false, hideGigyaLink:true,redirectURL: document.location.href});
+			*/
+		});
+	   //gigya.services.socialize.showLoginUI(conf, {containerID: "componentDiv", width:150, height:92,redirectURL: "http://actionscript2objectivec.com", showTermsLink:false, hideGigyaLink:true});
+	</script>
+	
+
+<!--input type="button" onclick="addConnection('twitter')" value="Connect to twitter"   />    
+<input type="button" onclick="addConnection('facebook')" value="Connect to facebook"   />   
+<input type="button" onclick="addConnection('linkedin')" value="Connect to linkedin"   />  
+
+<input type="button" onclick="addConnection('myspace')" value="Connect to myspace"   />  
+<input type="button" onclick="addConnection('yahoo')" value="Connect to yahoo"   />  
+<input type="button" onclick="addConnection('google')" value="Connect to google"   />  
+<input type="button" onclick="addConnection('messenger')" value="Connect to messenger"   />  
+<input type="button" onclick="addConnection('orkut')" value="Connect to orkut"   /><p-->    
+
+<input type="button" onclick="getAvailableProviders()" value="get Available Providers"   />  
+<input type="button" onclick="removeConnection()" value="remove all connections"   />  
+<input type="button" onclick="setStatus('testing...')" value="Set status"   />
+
+<input type="button" onclick="publishUserAction()" value="publishUserAction"   />
+<input type="button" onclick="getAlbums()" value="getAlbums"   />
+<input type="button" onclick="getFriendsInfo()" value="getFriendsInfo"   />
+
+<input type="button" onclick="getUserInfo()" value="Circle of Friends"   />
+
+<input type="button" onclick="getSessionInfo()" value="getSessionInfo"   />
+
+
+
+
+<p><p>
+	
+	
+	
+
+
+
+ 
+
+<div id="componentDiv"></div>
+
+
+<div id="friends" style="display:none">
+
+</div>
+
+<div id="canvasHolder"></div>
+
+
+<input type="button" id="logout" onclick="logout()" value="logout"   />
+	
+<select id="networks" name="networks">
+	<option value="facebook">facebook</option>
+	<option value="twitter">twitter</option>
+	<!--option value="linkedin">linkedin</option-->
+	<option value="myspace">myspace</option>
+	<option value="messenger">messenger</option>
+	<option value="google">google</option>
+	<option value="microsoft">microsoft</option>
+	<option value="orkut">orkut</option>
+	<option value="openid">openid</option>
+</select>
+<input type="button" id="login" onclick="login()" value="login"   />
+
+<p>
+
+<textarea id="console" rows="20" cols="60"></textarea>
+
+
+</body>
+</html>
+
+
+
+

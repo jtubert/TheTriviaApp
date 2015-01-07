@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Simple3d canvas test</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script-->
+	<script src="js/jquery-1.4.4-min.js"></script>
+	<script src="js/3d.js"></script>
+	<link rel="stylesheet" href="css/style.css" media="screen" />
+	
+	<script type="application/x-javascript">
+		$(document).ready (function () {		
+			var main = new com.jtubert.Main(false);
+			main.init("friends", "img/john.jpg");		
+		});
+	
+	</script>	
+	
+</head>
+<body>
+	<div id="holder"></div>
+	
+	<div id="friends" style="display:none;">
+		<img src="img/amal.jpg"/>
+		<img src="img/carol.jpg"/>
+		<img src="img/dave.jpg"/>
+		<img src="img/jazzy.jpg"/>
+		<img src="img/sam.jpg"/>
+	</div>
+		
+	
+</body>
+</html>

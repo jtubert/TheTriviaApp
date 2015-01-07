@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>postToWall</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+	<!-- Date: 2011-02-28 -->
+	
+	<script src="js/jquery-1.4.4-min.js"></script>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+	
+</head>
+<body>
+	
+	<div id="fb-root"></div>
+<script>
+	
+    window.fbAsyncInit = function() {
+     	FB.init({appId: "192769097480", status: true, cookie: true, xfbml: true}); 
+	}; 
+	
+	function login(){
+	    FB.api('/me', function(response) {
+	        document.getElementById('login').style.display = "block";
+	        document.getElementById('login').innerHTML = response.name + " succsessfully logged in!";
+	    });
+	}
+
+	function streamPublish(){		
+		/*
+		var params = {};
+		params['message'] = 'Message';
+		params['name'] = 'Name';
+		params['description'] = 'Description';
+		params['link'] = 'http://google.com';
+		params['picture'] = 'http://labs.jtubert.com/labs/facebook/laura.jpg';
+		params['caption'] = 'Caption';
+
+		FB.api('/me/feed', 'post', params, function(response) {
+		  if (!response || response.error) {
+		    alert('Error occured');
+		  } else {
+		    alert('Published to stream - you might want to delete it now!');
+		  }
+		});
+		
+		var fbml = '<fb:request-form action="http://labs.jtubert.com/facebook/postToWall.html" target="_top" method="post" invite="true" type="Contest" content="blah..."><fb:multi-friend-selector target="_top" showborder="false" max="30" import_external_friends="false" email_invite="false" cols="5" actiontext="Join NOW to WIN!" /></fb:request-form>';
+		
+		
+		
+		FB.ui({
+		    method: 'fbml.dialog',
+		    fbml: fbml,
+		    size: {width:200,height:480}, width:300,height:500
+		});
+		
+		FB.ui({
+			method: 'apprequests', 
+			message: 'You should learn more about this awesome game.', 
+			data: 'tracking information for the user'
+		});
+	
+		*/	
+		/*
+		var params = {};
+		params['message'] = 'Message';
+		params['name'] = 'Name';
+		params['attachment'] = 'attachment';
+		params['description'] = 'Description';
+		params['link'] = 'http://google.com';
+		params['picture'] = 'http://labs.jtubert.com/labs/facebook/laura.jpg';
+		params['caption'] = 'Caption';
+		
+		
+		FB.api('/rovagnati/feed', 'post', params, function(response) {
+		  if (!response || response.error) {
+		    alert('Error occured');
+		  } else {
+		    console.log(response);
+		  }
+		});
+		*/
+		
+		var params = {fields:"name,picture"};
+		
+		FB.api('/me/friends', 'get', params, function(response) {
+		  if (!response || response.error) {
+		    alert('Error occured');
+		  } else {
+		    console.log(response);
+		  }
+		});
+		
+		
+		
+		//https://graph.facebook.com/me/friends
+		
+    }
+	
+	
+	
+</script>
+
+
+
+
+<p><fb:login-button autologoutlink="true" perms="email,create_event,user_birthday,status_update,publish_stream"></fb:login-button></p>
+
+
+<div id="login" style ="display:none"></div>
+
+
+
+<a href="#" onclick="streamPublish();">Click to Publish on Facebook wall</a>
+    
+
+</body>
+</html>

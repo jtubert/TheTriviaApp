@@ -1,0 +1,76 @@
+<html>
+
+<head>
+
+<title>Color Genius</title>
+
+<script src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.getimagedata.min.js"></script>
+<!--[if IE]><script type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+<script src="js/quantize.js"></script>
+<script src="js/ColorGenius.js"></script>
+
+<style>
+	body{
+		background-color:black;
+		margin:0px; 
+		padding:0px;
+	}
+	#backg{
+		
+		width:100%;
+		height:100px;
+	}
+	#backg ul{
+		margin:0px; 
+		padding:0px;
+	}
+
+	#backg ul li{
+		display:inline; 
+		height:30px; 
+		float:left; 
+		list-style:none;
+	}
+	#image{
+		position:absolute;
+		top:20;
+		left:20;
+		border-style:solid;
+		border-width:4px;
+		border-color:white;
+	}
+	#similarImages{
+		position:absolute;
+		display:block;
+		top:220;
+		left:0;
+	}
+	
+</style>
+
+</head>
+
+<body>
+	<script>		
+		$(document).ready (function () {		
+			var colorGenius = com.jtubert.ColorGenius();
+			colorGenius.init("GroupLeader_JohnTubert.jpg");
+		});
+	</script>
+	
+		<div id="backg">
+			<ul>
+			</ul>
+		</div>
+
+		<div id="image">
+		
+		</div>
+		
+		<div id="similarImages">
+		
+		</div>
+	
+</body>
+</html>

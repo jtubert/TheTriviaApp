@@ -1,0 +1,74 @@
+body {
+ margin: 0px ;
+ padding: 0px ;
+ background: #FFFFFF ;
+ font-family: Helvetica ;
+ font-size: 14px ;
+ color:#000000;
+}
+
+#backg{
+	background-image:url('../cube.gif');
+	width:600px;
+	height:811px;
+	position: absolute;
+}
+
+.center{
+	margin-left:auto;
+	margin-right:auto;
+	width:100%;
+}
+
+
+
+.grid{
+	position: relative;
+	width:20px;height:20px;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	float: left;
+	display:block;
+}
+
+#cube {
+	position: absolute;  margin: 30px auto;
+	height: 200px;  width: 200px;	
+	left:205px;
+	top:518px;
+
+
+}
+#front {
+  position: absolute;  height: 200px;  width: 200px;
+
+}
+#back {
+	position: absolute;  height: 200px;  width: 200px;
+	top:-364px;
+}
+
+#side1 {
+	position: absolute;  height: 200px;  width: 200px;
+	left:-200px;
+
+
+}
+
+#side2 {
+	position: absolute;  height: 200px;  width: 200px;
+	left:200px;
+
+}
+
+#bottom {
+	position: absolute;  height: 200px;  width: 200px;
+	top:181px;
+}
+
+#top {
+	position: absolute;  height: 200px;  width: 200px;
+	top:-182px;
+ 
+}

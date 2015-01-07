@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Canvas test</title>
+		<script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
+		<script src="js/helvetiker_bold.typeface.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas" style="display:none;"></canvas>​
+	</body>
+	
+	<script type="text/javascript">		
+		var materials = [];
+		var textures = [];
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+		var sphereTexture;
+
+		var size = 1000;
+		var sphere;
+		var textMesh;
+
+		function changeCanvas() {
+		    var canvas = document.getElementById('canvas');
+			canvas.width = canvas.height = size;
+		    var context = canvas.getContext('2d');
+			var img = new Image();
+			img.onload = function() {}
+			img.src = "instagram.jpeg";	
+			context.drawImage(img, 0, 0);
+			return canvas;
+		}
+
+		function init() {
+		    scene = new THREE.Scene();
+		    camera = new THREE.PerspectiveCamera(20, width / height, 1, 500);
+		    camera.position.y = 0;
+		    camera.position.z = 500;
+		    scene.add(camera);
+
+		    for (var i = 0; i < 36; i++) {
+		        var texture = new THREE.Texture(changeCanvas());
+		        textures.push(texture);
+
+		        var material = new THREE.MeshBasicMaterial({ map: texture });
+		        materials.push(material);
+		    }
+		
+			
+			// sphere
+			sphereTexture = new THREE.Texture(changeCanvas());
+			sphereTexture.needsUpdate = true;
+		
+			var radius = 50, segments = 36, rings = 36;
+			sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), new THREE.MeshBasicMaterial({
+	            map: sphereTexture
+	        }));
+	        sphere.overdraw = true;
+	        //scene.add(sphere);
+		   	
+		 	//var cube = new THREE.Mesh(new THREE.CubeGeometry(size, size, size, 1, 1, 1, materials), new THREE.MeshFaceMaterial());
+		    //cube.position.y = 150;
+		    //cube.rotation.y = 10;
+		    //scene.add(cube);
+		
+			
+		
+			var textGeo = new THREE.TextGeometry( "Why", { size: 20, height: 5, curveSegments: 36, font: "helvetiker", weight: "bold", style: "normal" });
+			
+			var textMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, wireframe: false } );
+			textMesh = new THREE.Mesh( textGeo, textMaterial );
+			//textMesh.position.y = 150;
+		    //textMesh.rotation.y = 10;
+			textMesh.overdraw = true;
+							
+			scene.add(textMesh);
+
+		    renderer = new THREE.WebGLRenderer();
+		    renderer.setSize(width, height);
+		    document.body.appendChild(renderer.domElement);
+		}
+
+		function animate() {
+			textMesh.rotation.y -= 0.005;
+			
+			sphere.rotation.y -= 0.005;
+		    requestAnimationFrame(animate);
+		    render();
+		}
+
+		function render() {
+		    changeCanvas();
+
+		    for (var i = 0; i < textures.length; i++) {
+		        textures[i].needsUpdate = true;
+		    }
+		
+			sphereTexture.needsUpdate = true;
+
+		    renderer.render(scene, camera);
+		}
+
+		init();
+		animate();
+	</script>	
+</html>

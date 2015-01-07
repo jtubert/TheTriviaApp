@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+	<!--[if lt IE 9]><script type="text/javascript" src="../../flashcanvas_lib/flashcanvas.js"></script><![endif]--> 
+	
+	<script src="js/jquery-1.4.4-min.js"></script>
+	<script src="js/3d.js"></script>
+	<script src="js/instagram.js"></script>
+	<script src="js/jquery.getimagedata.min.js"></script>
+	<link rel="stylesheet" href="css/style.css" media="screen" />
+		
+	<link rel="stylesheet" href="css/style_combined.min.css" media="screen" />
+	
+</head>
+
+<body>
+<script>
+	var instagram;
+	$(document).ready (function () {		
+		instagram = com.jtubert.instagram();
+		instagram.init();
+	});
+</script>
+<center>
+<div id="login">
+<a href="https://instagram.com/oauth/authorize/?client_id=947d2759498c464692601168e49e06b4&redirect_uri=http://labs.jtubert.com/canvas/simple3d/instagram.html&response_type=token">login to instagram</a>  
+<!--a href="https://instagram.com/oauth/authorize/?client_id=10b957025e7d4173b00207cbdec99360&redirect_uri=http://localhost:8888/git/canvas/simple3d/simple.html&response_type=token">login to instagram</a-->
+</div>
+
+
+<div id="friends" style="display:none"></div>
+
+	
+<div id="canvasHolder"></div>
+
+<canvas style='z-index:0;display:none' id='copy' width='1000' height='500'></canvas>
+
+</center>
+	
+</body>
+</html>
+
+
+
+

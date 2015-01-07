@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Foursquare</title>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.ba-bbq.min.js"></script>
+<script src="FoursquareAPI.js"></script>
+
+
+</head>
+
+<script type="text/javascript">
+	
+	function onHistory(history){
+		$("#login").hide();
+		//console.log(history);
+		// Find categories and build drop down
+        var categories = {};
+          for (var i = 0; i < history.length; i++) {
+            var entryCategories = history[i]['venue']['categories'];
+            for (var j = 0; j < entryCategories.length; j++) {
+              var category = entryCategories[j];
+              categories[category['id']] = category['name'];
+            }
+          }
+
+        $("body").html( "<b>Venue categories</b><br>");  
+
+        $.each( categories, function( key, value ) {
+  			$("body").append( value + "<br>");
+		});
+          
+    };
+	
+
+	$(document).ready(function() {		
+		var foursquare = new Foursquare('QNZPTJS2KDCE3VL35RYTYTCO5HXU4CZ4GU5SNTSI01BRXQX0', 'https://foursquare.com/', 'https://api.foursquare.com/');
+		foursquare.venueHistory(bind(onHistory, this));
+	});
+
+
+	
+
+  </script>
+
+</head>
+<body>
+	
+<div id="login">
+	<a href="https://foursquare.com/oauth2/authenticate?client_id=QNZPTJS2KDCE3VL35RYTYTCO5HXU4CZ4GU5SNTSI01BRXQX0&v=20121024&response_type=token&redirect_uri=http://labs.jtubert.com/APIs/foursquare/">login to foursquare</a>
+</div>
+
+<div id="results"></div>
+
+
+</body>
+</html>

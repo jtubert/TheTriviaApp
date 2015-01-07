@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "_default": {
+            "link": "jtubert"
+        }, 
+        "jtubert": {
+            "applicationId": "e6axx6gwboBA3REUoGHwUL1ZvE5ZkkXUecDJtgtY", 
+            "masterKey": "MpjUmmnSr3HKcQR2tbQiQGhaqSMwkjRzIl0yAFEU"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.16"
+    }
+}

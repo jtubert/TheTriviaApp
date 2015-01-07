@@ -1,0 +1,34 @@
+<html>
+
+<head>
+
+<title>ScaleBitmap</title>
+
+<script src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.getimagedata.min.js"></script>
+<script src="js/ScaleBitmap.js"></script>
+
+<style>
+</style>
+
+</head>
+
+<body>
+	<script>		
+		$(document).ready (function () {		
+			var bitmapScale = com.jtubert.ScaleBitmap();
+			bitmapScale.init({id:"bmp",
+								top:10,
+								bottom:10,
+								left:10,
+								right:10,
+								targetWidth:450,
+								targetHeight:450});
+		});
+	</script>
+
+	<center>
+		<img id="bmp" src="bitmap.png"></img>
+	</center>
+</body>
+</html>

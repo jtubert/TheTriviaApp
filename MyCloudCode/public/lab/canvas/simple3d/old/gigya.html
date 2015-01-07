@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Simple3d canvas test</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script-->
+	<script src="js/jquery-1.4.4-min.js"></script>
+	<script src="js/3d.js"></script>
+	<script type="text/javascript" src="http://cdn.gigya.com/js/socialize.js?apiKey=3_dmgqBSRVOZdPcxrbAKgou7dJKlzqcqASOSFW8LtFfYfIKdUAvWyfFLT5IZgt2owS"></script>
+	
+	<script type="text/javascript">
+	var conf={APIKey: '2_dN0eh-Tkc4rF19iqsHI06pQus0hYGIqX1Aa5af5j4hI5pv7CFLrIi2LUEa3cqiU0',enabledProviders: 'facebook,twitter,linkedin,myspace,yahoo,google,microsoft,orkut,openid',connectWithoutLoginBehavior: 'alwaysLogin'}
+	</script>
+	
+	
+	<link rel="stylesheet" href="css/style.css" media="screen" />
+	
+	<script type="application/x-javascript">
+		var userPhotoURL;
+		
+		
+	
+		$(document).ready (function () {
+			gigya.services.socialize.getSessionInfo(conf,{provider:'facebook',callback:getSessionInfoCallback});
+		});
+		
+		function getSessionInfoCallback(response){
+			if ( response.errorCode == 0 ) {               
+				var authToken = response['authToken'];
+				//alert("authToken: "+authToken);
+				gigya.services.socialize.getUserInfo(conf,{callback:getUserInfoCallback}); 
+			}else{
+				alert('Error/getSessionInfoCallback :' + response.errorMessage);  
+			}
+		}
+		
+		function getUserInfoCallback(response) {    
+		     if ( response.errorCode == 0 ) {               
+		        userPhotoURL = response.user.photoURL; 
+				gigya.services.socialize.getFriendsInfo(conf,{callback:getFriendsInfoCallback}); 	  
+		     }  
+		     else {  
+		         alert('Error :' + response.errorMessage);  
+		     }    
+		}
+		
+		
+		function getFriendsInfoCallback(response) {    
+		     if ( response.errorCode == 0 ) {               
+		         var myFriends = response['friends'].asArray();            
+		         if ( null!=myFriends && myFriends.length>0) {          
+		               
+		             for (var index in myFriends) {  
+		                if(index < 10){ 
+							var currFriend = myFriends[index];  
+							$("#friends").append("<img src='"+currFriend['photoURL']+"'");
+							//msg += '('+currFriend['nickname']+') - '+ currFriend['photoURL']+ ':\n' ;  
+						}                 
+		             }              
+		             //console.log(response.toSource());
+		  			var main = new com.jtubert.Main(true);
+					main.init(5, "friends", userPhotoURL);
+		         }  
+		         else {  
+		             alert('No friends were returned');  
+		         }  
+		     }  
+		     else {  
+		         alert('Error :' + response.errorMessage);  
+		     }  
+		 }
+	
+	</script>	
+	
+</head>
+<body>
+	<div id="componentDiv"></div>
+	<div id="holder"></div>
+	
+	<div id="friends" style="display:none;">
+
+	</div>	
+	
+</body>
+</html>

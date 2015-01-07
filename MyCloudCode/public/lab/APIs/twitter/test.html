@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>test</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="John Tubert">
+	<!-- Date: 2011-03-23 -->
+	<script src="js/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	
+	<script>
+	
+	console.log("test");
+	
+	$(document).ready (function () {		
+		$.getJSON('http://twitter.com/friendships/create/jtubert.xml?callback=?',
+		  {
+		    user: 'jtubert'
+		  },
+		  function(data) {
+		   console.log(data[0].text);   
+		  });		
+	});
+	</script>
+</body>
+</html>

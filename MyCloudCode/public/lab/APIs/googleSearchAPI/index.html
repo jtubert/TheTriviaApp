@@ -1,0 +1,62 @@
+<html>
+<head>
+    <title>test</title>
+</head>
+<body>
+<div id="content"></div>
+<script>
+    function hndlr(response) {
+
+        /*
+        //"https://www.googleapis.com/customsearch/v1?
+
+                q={searchTerms}&
+                num={count?}&
+                start={startIndex?}&
+                lr={language?}&
+                safe={safe?}&
+                cx={cx?}&
+                cref={cref?}&
+                sort={sort?}&
+                filter={filter?}&
+                gl={gl?}&
+                cr={cr?}&
+                googlehost={googleHost?}&
+                c2coff={disableCnTwTranslation?}&
+                hq={hq?}&
+                hl={hl?}&
+                siteSearch={siteSearch?}&
+                siteSearchFilter={siteSearchFilter?}&
+                exactTerms={exactTerms?}&
+                excludeTerms={excludeTerms?}&
+                linkSite={linkSite?}&
+                orTerms={orTerms?}&
+                relatedSite={relatedSite?}&
+                dateRestrict={dateRestrict?}&
+                lowRange={lowRange?}&
+                highRange={highRange?}&
+                searchType={searchType}&
+                fileType={fileType?}&
+                rights={rights?}&
+                imgSize={imgSize?}&
+                imgType={imgType?}&
+                imgColorType={imgColorType?}&
+                imgDominantColor={imgDominantColor?}&
+                alt=json"
+
+
+        */
+        console.log(response);
+
+        for (var i = 0; i < response.items.length; i++) {
+            var item = response.items[i];
+            // in production code, item.htmlTitle should have the HTML entities escaped.
+            document.getElementById("content").innerHTML += "<br><a href='"+item.link+"'>" + item.htmlTitle + "</a>";
+
+        }
+    }
+</script>
+<script src="https://www.googleapis.com/customsearch/v1?key=AIzaSyAlwGb2y8MFpMHWSbpU7GQ8xVHheMDOMgM&cx=017576662512468239146:omuauf_lfve&googlehost=google.com&cr=countryUS&q=Goldman Sachs design&callback=hndlr&dateRestrict=w[number]:1&num=10&exactTerms=goldman sachs">
+</script>
+</body>
+</html>

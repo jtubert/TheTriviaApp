@@ -1,0 +1,13 @@
+/Applications/MAMP/htdocs/svn/canvas/puzzle/js/Puzzle.js:429:60: Expected '!==' and instead saw '!='.
+			var testX = ($("#piece" + i).css("left").replace("px", "") != pieceArr["piece" + i].startingX);
+                                                           ^
+/Applications/MAMP/htdocs/svn/canvas/puzzle/js/Puzzle.js:430:59: Expected '!==' and instead saw '!='.
+			var testY = ($("#piece" + i).css("top").replace("px", "") != pieceArr["piece" + i].startingY);
+                                                          ^
+/Applications/MAMP/htdocs/svn/canvas/puzzle/js/Puzzle.js:491:38: Expected '!==' and instead saw '!='.
+        if (elem.id.indexOf("piece") != -1) {
+                                     ^
+/Applications/MAMP/htdocs/svn/canvas/puzzle/js/Puzzle.js:535:6: Move 'var' declarations to the top of the function.
+		for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+     ^
+/Applications/MAMP/htdocs/svn/canvas/puzzle/js/Puzzle.js:535:6: Stopping.  (92% scanned).

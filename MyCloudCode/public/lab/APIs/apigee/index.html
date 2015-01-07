@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Usergrid HTML5 Template</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="usergrid.js"></script>
+    </head>
+    <body>
+        <script>
+            $(function(){
+                var client = new Usergrid.Client({
+                    orgName:'jtubert',
+                    appName:'jtubert'
+                });
+
+                client.login("jtubert", "cb7978",
+                        function (err) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                //success
+                                var token = client.token;
+                                console.log(token);
+                            }
+                        }
+                );
+
+                $('#fileselect').bind("change", function(e) {
+                    var files = e.target.files || e.dataTransfer.files;
+                    // Our file var now holds the selected file
+                    file = files[0];
+
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function(request) {
+                            //request.setRequestHeader("X-Parse-Application-Id", 'RALGxrKd02Wj1xYAozEztlyVwiWOcoOftotajXof');
+                            //request.setRequestHeader("X-Parse-REST-API-Key", 'kRBvZGPEyO3ZcyRvv0NyOhx8KKtjyDCZpEntlrQm');
+                            request.setRequestHeader("Authorization", "Bearer YWMtDgGpkL8TEeKADK9Qq2AXAAAAAT7Xeo6pzvf37NnDJi2JroQapJbD805GeG4");
+                        },
+                        url: "https://api.usergrid.com/jtubert/jtubert/assets/21eb0ada-bf10-11e2-979c-d9853b71d858/data",
+                        data: file,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            //alert("File available at: " + data.url);
+                            console.log(data);
+
+
+
+
+
+                        },
+                        error: function(data) {
+                            console.log(data.responseText);
+                        }
+                    });
+
+                });
+
+
+            });
+
+
+
+
+
+
+
+
+        /*
+        var options = {
+            method:'POST',
+            endpoint:'assets',
+            body:{"name": "my-image.jpg","owner": "7d1aa429-e978-11e0-8264-005056c00008", "path": "/myassets/asset1"}
+        };
+        client.request(options, function (err, data) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(data);
+            }
+        });
+        */
+
+        /*
+        var options = {
+            type:'book',
+            title:'the old man and the sea'
+        };
+
+        client.createEntity(options, function (error, response) {
+            if (error) { // Error - the book was not saved properly
+                alert("Could not create the book. Did you enter your orgName (username) correctly on line 18 of index.html?");
+            } else { // Success - the book was created properly
+
+                // The saved object is returned in the “response” variable,
+                // defined on line 46. The code below outputs it on the page!
+                document.getElementsByTagName('body')[0].innerHTML
+                        +=  "Success! Here is the object we stored; "
+                        +   "notice the timestamps and unique id we created for you:"
+                        +   "<br/><br/>"
+                        +   JSON.stringify(response.get());
+            }
+        });
+        */
+
+
+        </script>
+
+        <form class="form-profile">
+            <h2 class="form-signin-heading">Profile</h2>
+            <div id="profile-image"></div></p>
+            <input type="text" id="profile-firstname" placeholder="First name" />
+            <input type="text" id="profile-lastname" placeholder="Last name" />
+            <input type="file" name="fileselect" id="fileselect"></input></br>
+            <button id="saveButton" class="btn btn-large btn-primary">Save</button>
+        </form>
+
+
+    </body>
+</html>

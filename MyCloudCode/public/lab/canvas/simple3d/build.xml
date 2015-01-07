@@ -1,0 +1,112 @@
+<project name="Build example" default="all" basedir=".">
+    <!-- Setup -->
+    <property name="SRC_DIR" value="." description="Source folder" />
+    <property name="SRC_CSS_DIR" value="${SRC_DIR}/css" description="CSS source folder" />
+    <property name="SRC_JS_DIR" value="${SRC_DIR}/js" description="JavaScript source folder" />
+    <property name="DIST_DIR" value="." description="Output folder for build targets" />
+    <property name="DIST_CSS_DIR" value="${DIST_DIR}/css" description="Output folder for CSS files" />
+    <property name="DIST_JS_DIR" value="${DIST_DIR}/js" description="Output folder for JavaScript files" />
+    <property name="BUILD_DIR" value="../lib" description="Files needed to build" />
+    <property name="YUI" value="${BUILD_DIR}/yuicompressor-2.4.2.jar" description="YUICompressor" />
+ 
+    <!-- Files names for distribution -->
+    <property name="CSS" value="${DIST_CSS_DIR}/style_combined.css" />
+    <property name="CSS_MIN" value="${DIST_CSS_DIR}/style_combined.min.css" />
+    <property name="JS" value="${DIST_JS_DIR}/3d_combined.min.js" />
+    <property name="JS_MIN_3d" value="${DIST_JS_DIR}/3d.min.js" />
+	<property name="JS_MIN_social" value="${DIST_JS_DIR}/social.min.js" />
+ 
+    <!-- Targets -->
+    <target name="html" description="Copy HTML files to the output folder">
+        <mkdir dir="${DIST_DIR}" />
+        <copy todir="${DIST_DIR}">
+            <fileset dir="${SRC_DIR}">
+                <include name="*.*" />
+            </fileset>
+        </copy>
+    </target>
+ 
+    <target name="css" depends="html" description="Concatenate CSS source files">
+        <echo message="Building ${CSS}" />
+        <concat destfile="${CSS}">
+            <!--fileset dir="${SRC_CSS_DIR}" includes="reset.css" />
+            <fileset dir="${SRC_CSS_DIR}" includes="fonts.css" />
+            <fileset dir="${SRC_CSS_DIR}" includes="base.css" /-->
+            <fileset dir="${SRC_CSS_DIR}" includes="style.css" />
+        </concat>
+        <echo message="${CSS} built." />
+    </target>
+ 
+    <target name="css.min" depends="css" description="Minimize CSS files">
+        <echo message="Building ${CSS_MIN}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_CSS_DIR}">
+            <fileset dir="${DIST_CSS_DIR}">
+                <include name="style_combined.css" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="style_combined.css" to="style_combined.min.css" />
+        </apply>
+        <echo message="${CSS_MIN} built." />
+    </target>
+ 
+    <target name="js" depends="html" description="Concatenate JavaScript source files">
+        <echo message="Building ${JS}" />
+        <concat destfile="${JS}">
+			<fileset dir="${SRC_JS_DIR}" includes="jquery-1.4.4-min.js" />
+			<fileset dir="${SRC_JS_DIR}" includes="jquery.getimagedata.min.js" />
+			<fileset dir="${SRC_JS_DIR}" includes="3d.min.js" />
+			<fileset dir="${SRC_JS_DIR}" includes="social.min.js" />
+            
+        </concat>
+        <echo message="${JS} built." />
+    </target>
+ 
+    <target name="js.min" description="Minimize JavaScript files">
+        <echo message="Building ${JS_MIN_3d}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_JS_DIR}">
+            <fileset dir="${DIST_JS_DIR}">
+                <include name="3d.js" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="3d.js" to="3d.min.js" />
+        </apply>
+        <echo message="${JS_MIN_3d} built." />
+    </target>
+
+	<target name="js.min.social" depends="js" description="Minimize JavaScript files">
+        <echo message="Building ${JS_MIN_social}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_JS_DIR}">
+            <fileset dir="${DIST_JS_DIR}">
+                <include name="social.js" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="social.js" to="social.min.js" />
+        </apply>
+        <echo message="${JS_MIN_social} built." />
+    </target>
+ 
+    <target name="clean">
+        <delete file="${CSS}" />
+		<delete file="${JS_MIN_3d}" />
+		<delete file="${JS_MIN_social}"/>
+    </target>
+ 
+    <target name="all" depends="html, css, css.min, js.min, js.min.social, js,clean">
+        <echo message="Build complete." />
+    </target>
+</project>

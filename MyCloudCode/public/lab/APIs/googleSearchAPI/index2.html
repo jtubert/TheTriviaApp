@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>index</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+
+    //https://developers.google.com/web-search/docs/#The_Hello_World_of_Google_Search
+    //https://developers.google.com/web-search/docs/reference?hl=de-DE#_fonje_args
+
+    var url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=8&q=Goldman%20Sachs%20design&dateRestrict=w[number]:1&callback=?";
+
+
+    $.getJSON(url,{}, onData);
+
+
+    function onData(data) {
+        console.log(data);
+
+        $.each(data.responseData.results, function(i,item){
+            $("#google").append("<a href='"+item.url+"'>"+item.titleNoFormatting+"</a><br>");
+        });
+
+
+    };
+
+</script>
+
+<h1>R/GA Alert system results</h1>
+<h2>Google results</h2>
+<div id="google"></div>
+
+<h2>Cargo Collective results</h2>
+<div id="cargo"></div>
+
+<h2>Behance results</h2>
+<div id="behance"></div>
+<p>No results this week</p>
+
+</body>
+</html>
