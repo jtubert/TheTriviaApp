@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "TheTriviaApp": {
+            "applicationId": "XLA1dDUeG60GkpWscXc3qdGHaxDgplKTvSxK5Oeh", 
+            "masterKey": "ZGmlOVpXMiWYjAO8eb4Zp3EEZIrURkWrN8suKFTP"
+        }, 
+        "_default": {
+            "link": "TheTriviaApp"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.3"
+    }
+}
